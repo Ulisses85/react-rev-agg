@@ -16,6 +16,10 @@ class App extends Component {
     return fetch(`api/${fileName}.json`).then((response) => response.json());
   }
 
+  filterHandler = (e) => {
+    this.setState({ filter: e.target.value });
+  };
+
   aggregateRevenue(products, filter) {
     const sum = {};
 
@@ -62,6 +66,7 @@ class App extends Component {
     if (this.state.products === null || undefined) {
       return "Loading...";
     }
+
     return (
       <div class="product-list">
         <label>Search Products</label>
