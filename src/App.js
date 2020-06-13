@@ -35,6 +35,9 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.products === null || undefined) {
+      return "Loading...";
+    }
     return (
       <div class="product-list">
         <label>Search Products</label>
