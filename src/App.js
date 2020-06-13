@@ -16,6 +16,30 @@ class App extends Component {
     return fetch(`api/${fileName}.json`).then((response) => response.json());
   }
 
+  aggregateRevenue(products, filter) {
+    const sum = {};
+
+    products.forEach((product) => {
+      if (filter && new RegExp(filter, "i").test(product.name) === false) {
+        return;
+      }
+
+      if (!sum[product.id]) {
+        sum[product.id] = { ...product };
+      } else {
+        sum[product.id].sold += product.sold;
+      }
+    });
+
+    const result = Object.values(sum);
+
+    result.sort((a, b) =>
+      a.name.toUpperCase().localeCompare(b.name.toUpperCase())
+    );
+
+    return result;
+  }
+
   componentDidMount() {
     Promise.all([
       this.fetchApiData("branch1"),
