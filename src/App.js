@@ -5,12 +5,16 @@ import "./App.css";
 const formatNumber = (number) =>
   new Intl.NumberFormat("en", { minimumFractionDigits: 2 }).format(number);
 class App extends Component {
+  state = {
+    products: null,
+    filter: "",
+  };
+
   render() {
     return (
       <div class="product-list">
         <label>Search Products</label>
-        <input type="text" />
-
+        <input type="text" placeholder="input" />
         <table>
           <thead>
             <tr>
