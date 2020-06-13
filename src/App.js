@@ -43,6 +43,14 @@ class App extends Component {
 
     return result;
   }
+  productRows = (products) => {
+    return products.map((product) => (
+      <tr key={product.name}>
+        <td>{product.name}</td>
+        <td>{formatNumber(product.sold * product.unitPrice)}</td>
+      </tr>
+    ));
+  };
 
   componentDidMount() {
     Promise.all([
@@ -66,11 +74,20 @@ class App extends Component {
     if (this.state.products === null || undefined) {
       return "Loading...";
     }
+    const products = this.aggregateRevenue(
+      this.state.products,
+      this.state.filter
+    );
+    const productRows = this.productRows(products);
+    const total = products.reduce(
+      (total, product) => total + product.sold * product.unitPrice,
+      0
+    );
 
     return (
       <div class="product-list">
         <label>Search Products</label>
-        <input type="text" placeholder="input" />
+        <input type="text" onChange={this.filterHandler} placeholder="input" />
         <table>
           <thead>
             <tr>
@@ -78,11 +95,11 @@ class App extends Component {
               <th>Revenue</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>{productRows}</tbody>
           <tfoot>
             <tr>
               <td>Total</td>
-              <td></td>
+              <td>{total}</td>
             </tr>
           </tfoot>
         </table>
