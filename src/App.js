@@ -87,7 +87,7 @@ class App extends Component {
     return (
       <div class="product-list">
         <label>Search Products</label>
-        <input type="text" onChange={this.filterHandler} placeholder="input" />
+        <input type="text" onChange={this.filterHandler} placeholder="..." />
         <table>
           <thead>
             <tr>
