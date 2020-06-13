@@ -4,11 +4,35 @@ import "./App.css";
 
 const formatNumber = (number) =>
   new Intl.NumberFormat("en", { minimumFractionDigits: 2 }).format(number);
+
 class App extends Component {
   state = {
     products: null,
+    error: null,
     filter: "",
   };
+
+  fetchApiData(fileName) {
+    return fetch(`api/${fileName}.json`).then((response) => response.json());
+  }
+
+  componentDidMount() {
+    Promise.all([
+      this.fetchApiData("branch1"),
+      this.fetchApiData("branch2"),
+      this.fetchApiData("branch3"),
+    ])
+      .then((data) => {
+        this.setState({
+          products: [
+            ...data[0].products,
+            ...data[1].products,
+            ...data[2].products,
+          ],
+        });
+      })
+      .catch((error) => this.setState({ error }));
+  }
 
   render() {
     return (
