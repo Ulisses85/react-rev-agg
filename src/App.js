@@ -99,7 +99,7 @@ class App extends Component {
           <tfoot>
             <tr>
               <td>Total</td>
-              <td>{total}</td>
+              <td>{formatNumber(total)}</td>
             </tr>
           </tfoot>
         </table>
